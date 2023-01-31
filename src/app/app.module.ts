@@ -1,3 +1,5 @@
+import { AuthWardService } from './shared/auth/auth-ward.service';
+import { NbActionsModule, NbIconModule, NbSelectModule } from '@nebular/theme';
 /**
  * @license
  * Copyright Akveo. All Rights Reserved.
@@ -19,10 +21,15 @@ import {
   NbSidebarModule,
   NbToastrModule,
   NbWindowModule,
+  NbLayoutModule  
 } from '@nebular/theme';
+import { AuthModule } from './auth/auth.module';
+import { LayoutComponent } from './shared/layout/layout.component';
+import { JwtModule } from '@auth0/angular-jwt';
+import { environment } from '../environments/environment';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, LayoutComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -39,8 +46,24 @@ import {
     }),
     CoreModule.forRoot(),
     ThemeModule.forRoot(),
+    AuthModule,
+    NbLayoutModule,
+    NbIconModule,
+    NbSelectModule,
+    NbActionsModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: jwtTokenGetter,
+        allowedDomains: [environment.apiUrl],
+        disallowedRoutes: [`${environment.apiUrl}/token`],
+      },
+    }),
+
   ],
   bootstrap: [AppComponent],
+  providers: [AuthWardService]
 })
-export class AppModule {
-}
+export class AppModule { }
+
+export function jwtTokenGetter() { return localStorage.getItem('token') }
+

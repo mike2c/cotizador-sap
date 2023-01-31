@@ -1,0 +1,38 @@
+<nb-layout windowMode>    
+    <nb-layout-column>
+        <div class="row">
+            <div class="col-sm-12 col-md-4 col-lg-4 offset-md-4 offset-lg-4">
+                  <nb-card>
+                    <nb-card-body>                        
+                        <h1 id="title" class="title text-center">Sera Scandia</h1>
+                        <p class="sub-title text-center">Hola, inicia sesion con tu nombre de usuario</p>
+                        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                            <div class="form-group">
+                                <label for="username" class="label">Usuario</label>
+                                <input nbInput type="text" id="username" name="username" formControlName="username" class="input-full-width">
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="label">Contraseña</label>
+                                <input nbInput type="password" id="password" name="password" formControlName="password" class="input-full-width">
+                            </div>
+                            <div class="form-group">
+                                <label for="company" class="label">Compañia</label>
+                                <nb-select formControlName="company" placeholder="Compañia" fullWidth="true">
+                                    <nb-option *ngFor="let company of companies" [value]="company.id">
+                                        {{ company.nombre }}
+                                    </nb-option>                                 
+                                </nb-select>
+                            </div>  
+                            <button nbbutton [disabled]="!loginForm.valid"
+                                status="primary" 
+                                size="large" 
+                                class="appearance-filled full-width size-large shape-rectangle status-primary nb-transition">
+                                Log In
+                            </button>                        
+                        </form>                   
+                    </nb-card-body>
+                </nb-card>
+            </div>
+        </div>
+    </nb-layout-column>
+</nb-layout>

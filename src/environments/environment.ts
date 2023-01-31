@@ -10,4 +10,5 @@
 
 export const environment = {
   production: false,
+  apiUrl: 'https://app.biowest.net/CSC_Cotizador_API/api'
 };
