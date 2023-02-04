@@ -1,5 +1,5 @@
 import { AuthWardService } from './shared/auth/auth-ward.service';
-import { NbActionsModule, NbIconModule, NbSelectModule } from '@nebular/theme';
+import { NbActionsModule, NbContextMenuModule, NbIconModule, NbSelectModule, NbUserModule } from '@nebular/theme';
 /**
  * @license
  * Copyright Akveo. All Rights Reserved.
@@ -27,6 +27,12 @@ import { AuthModule } from './auth/auth.module';
 import { LayoutComponent } from './shared/layout/layout.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { environment } from '../environments/environment';
+import { registerLocaleData } from '@angular/common';
+import en from '@angular/common/locales/en';
+registerLocaleData(en);
+
+/** config ng-zorro-antd i18n **/
+import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
 
 @NgModule({
   declarations: [AppComponent, LayoutComponent],
@@ -51,6 +57,8 @@ import { environment } from '../environments/environment';
     NbIconModule,
     NbSelectModule,
     NbActionsModule,
+    NbUserModule,
+    NbContextMenuModule,    
     JwtModule.forRoot({
       config: {
         tokenGetter: jwtTokenGetter,
@@ -61,7 +69,10 @@ import { environment } from '../environments/environment';
 
   ],
   bootstrap: [AppComponent],
-  providers: [AuthWardService]
+  providers: [
+    AuthWardService,
+    { provide: NZ_I18N, useValue: en_US }
+  ]
 })
 export class AppModule { }
 

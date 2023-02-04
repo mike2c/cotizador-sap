@@ -1,4 +1,5 @@
-import { WebApiResponse } from './../WebApiResponse';
+import { environment } from './../../../environments/environment';
+import { WebApiResponse } from '../WebApiResponse';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -13,12 +14,13 @@ export class CompanyService {
   constructor(private http: HttpClient) { }
 
   getAllCompanies(): Observable<WebApiResponse<CompanyDTO>> {
-    return this.http.get<any>('https://app.biowest.net/CSC_Cotizador_API/api/Empresa')
+    return this.http.get<any>(`${environment.apiUrl}/management-empresa/empresas`)
     .pipe(
-      map(a => {
-        return new WebApiResponse<CompanyDTO>(a.data);
+      map(a => {                
+        return new WebApiResponse<CompanyDTO>(a);
       })
     );
   }
+  
   
 }

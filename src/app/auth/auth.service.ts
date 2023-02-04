@@ -19,7 +19,7 @@ export class AuthService {
       empresaId: userId.company,
     }
 
-    return this.http.post('https://app.biowest.net/CSC_Cotizador_API/api/Token', credentials)
+    return this.http.post('https://app.biowest.net/CSC_Cotizador_API/cotizador/management-auth/token', credentials)
     .pipe(
       map<any, any> (a => {        
         return {

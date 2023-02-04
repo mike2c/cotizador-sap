@@ -29,6 +29,11 @@ export const routes: Routes = [
         path: '',
         loadChildren: ()  => import('./test/test.module').then(a => a.TestModule),
         canActivate: [AuthWard]
+      },
+      {
+        path: 'cotizacion',
+        loadChildren: ()  => import('./quotation/quotation.module').then(a => a.QuotationModule),
+        canActivate: [AuthWard]
       }
     ]
   },

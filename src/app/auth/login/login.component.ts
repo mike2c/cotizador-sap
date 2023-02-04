@@ -2,7 +2,7 @@ import { AuthService } from './../auth.service';
 import { UserId } from './user-id';
 import { CompanyDTO } from './../../shared/dtos/company.dto';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CompanyService } from '../../shared/services/companies.service';
+import { CompanyService } from '../../shared/services/company.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -22,8 +22,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       'username': new FormControl('manager', [Validators.required]),
       'password': new FormControl('manager', [Validators.required]),
       'company':  new FormControl(null, [Validators.required]),
-    });
-        
+    });        
   }
 
   ngOnDestroy(): void {
@@ -34,7 +33,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     
     this.companyService.getAllCompanies().subscribe({
       next: (response) => {
-
+        
         this.companies = response.data;        
         if(response.hasValue()){
           this.loginForm.controls["company"].setValue(this.companies[0].id)
@@ -48,12 +47,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   onSubmit() {
         
-    const userID: UserId = {
-      username: this.loginForm.controls["username"].value,
-      password: this.loginForm.controls["password"].value,
-      company: this.loginForm.controls["company"].value,
-    }
-    
+    const userID: UserId = this.loginForm.value;
+
     this.authService.doAuthentication(userID).subscribe({
       next: (response) => {                        
         localStorage.setItem('userdata', JSON.stringify(response));
@@ -61,10 +56,9 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.router.navigate(['']);
       },
       error: (error) => {
-        console.log(error);        
+        console.log(error);
       },
-    })
-
+    });    
   }
 
 }

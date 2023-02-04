@@ -1,14 +1,27 @@
-.logo > img {
-    display: inline-block;
+.brand-logo {
+    margin: 0px !important;
+    display: inline-block !important;
     width: 150px;    
     margin: 10px;
+    margin-left: 20px !important;
 }
 
-// @import '~bootstrap/scss/mixins/breakpoints';
-// @import '~@nebular/theme/styles/global/breakpoints';
-// @import '../../@theme/styles/styles.scss';
+.header-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;    
+}
 
-// @include nb-install-component() {
+.header-navigation-group {
+
+}
+
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~@nebular/theme/styles/global/breakpoints';
+@import '../../@theme/styles/styles.scss';
+
+@include nb-install-component() {
 //   display: flex;
 //   justify-content: space-between;
 //   width: 100%;
@@ -58,19 +71,25 @@
 //     }
 //   }
 
-//   @include media-breakpoint-down(sm) {
-//     .control-item {
-//       display: none;
-//     }
-//     .user-action {
-//       border: none;
-//       padding: 0;
-//     }
-//   }
+  @include media-breakpoint-down(sm) {
+    .control-item {
+      display: none;
+    }
+    .user-action {
+      border: none;
+      padding: 0;
+    }
+    .brand-logo {
+        display: none;
+    }
+  }
 
-//   @include media-breakpoint-down(is) {
-//     nb-select {
-//       display: none;
-//     }
-//   }
-// }
+  @include media-breakpoint-down(is) {
+    nb-select {
+      display: none;
+    }
+    .brand-logo {
+        display: none;
+    }
+  }
+}

@@ -7,13 +7,20 @@ import { MENU_ITEMS } from './menu-items';
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss']
 })
-export class LayoutComponent {
+export class LayoutComponent implements OnInit {
 
   currentTheme: any;
   themes: any;
   menuItems = MENU_ITEMS;
+  user: any = undefined;
+  userMenu = [ { title: 'Profile' }, { title: 'Log out' } ];
+  userPictureOnly: boolean = true;
 
   constructor(private sidebarService: NbSidebarService) { }
+
+  ngOnInit(): void {
+    this.user = JSON.parse(localStorage.getItem('userdata'));
+  }
 
   changeTheme($event: any) {
     throw new Error('Method not implemented.');

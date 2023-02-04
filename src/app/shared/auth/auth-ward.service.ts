@@ -19,7 +19,7 @@ export class AuthWardService {
             if(this.isAuthenticated()){
                 return true;
             }else{
-                this.router.navigate(['session-expired']);
+                this.router.navigate(['login']);
                 return false;
             }            
         }
