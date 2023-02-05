@@ -1,9 +1,8 @@
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { UserId } from './login/user-id';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
-
+import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
@@ -13,23 +12,15 @@ export class AuthService {
 
   doAuthentication(userId: UserId): Observable<any> {
     
+    const headers: HttpHeaders = new HttpHeaders();
+    headers.set('skip', 'true');
+
     const credentials = {
       user: userId.username,
       password: userId.password,
       empresaId: userId.company,
-    }
+    } 
 
-    return this.http.post('https://app.biowest.net/CSC_Cotizador_API/cotizador/management-auth/token', credentials)
-    .pipe(
-      map<any, any> (a => {        
-        return {
-          username: 'mikedosce',
-          name: 'Miguel Angel Castillo Cornejo',
-          email: 'mikedosce1992@gmail.com',
-          profilePicture: 'http://2.bp.blogspot.com/-6HpqWQoVlo0/VG0Lv3FDN2I/AAAAAAAAA0Y/gIcePdRzWx4/s1600/pixel_mariobros.jpg',
-          token: a.bearerToken
-        };
-      })
-    )
+    return this.http.post(`${environment.apiUrl}/management-auth/token`, credentials, { headers: headers });
   }
 }

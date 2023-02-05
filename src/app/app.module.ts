@@ -8,7 +8,7 @@ import { NbActionsModule, NbContextMenuModule, NbIconModule, NbSelectModule, NbU
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CoreModule } from './@core/core.module';
 import { ThemeModule } from './@theme/theme.module';
 import { AppComponent } from './app.component';
@@ -33,6 +33,7 @@ registerLocaleData(en);
 
 /** config ng-zorro-antd i18n **/
 import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
+import { TokenInterceptor } from './shared/interceptors/token.interceptor';
 
 @NgModule({
   declarations: [AppComponent, LayoutComponent],
@@ -71,7 +72,8 @@ import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
   bootstrap: [AppComponent],
   providers: [
     AuthWardService,
-    { provide: NZ_I18N, useValue: en_US }
+    { provide: NZ_I18N, useValue: en_US },
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
   ]
 })
 export class AppModule { }

@@ -1,4 +1,3 @@
-import { FormsModule } from './../pages/forms/forms.module';
 import { AuthRoutingModule } from './auth-routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';

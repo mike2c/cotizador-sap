@@ -5,6 +5,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CompanyService } from '../../shared/services/company.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { log } from 'console';
 
 @Component({
   selector: 'scs-login',
@@ -33,7 +34,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     
     this.companyService.getAllCompanies().subscribe({
       next: (response) => {
-        
+
         this.companies = response.data;        
         if(response.hasValue()){
           this.loginForm.controls["company"].setValue(this.companies[0].id)
@@ -50,9 +51,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     const userID: UserId = this.loginForm.value;
 
     this.authService.doAuthentication(userID).subscribe({
-      next: (response) => {                        
+      next: (response) => {
         localStorage.setItem('userdata', JSON.stringify(response));
-        localStorage.setItem('token', response.token);
+        localStorage.setItem('token', response.bearerToken);
         this.router.navigate(['']);
       },
       error: (error) => {
@@ -61,4 +62,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     });    
   }
 
+  showAlert() {
+    
+  }
 }
