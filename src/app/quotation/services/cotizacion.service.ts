@@ -33,7 +33,7 @@ export class CotizacionService {
     });
 
     return this.http
-      .get<WebApiResponse<CotizacionDTO>>(`${environment.apiUrl}`, { params })
+      .get<WebApiResponse<CotizacionDTO>>(`${environment.apiUrl}/management-quote/quotes`, { params })
       .pipe(
         catchError(() => of(new WebApiResponse([])))
       );

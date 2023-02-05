@@ -13,7 +13,7 @@ export class LayoutComponent implements OnInit {
   themes: any;
   menuItems = MENU_ITEMS;
   user: any = undefined;
-  userMenu = [ { title: 'Profile' }, { title: 'Log out' } ];
+  userMenu = [ { title: 'Profile', link: 'profile' }, { title: 'Log out', link: 'login' } ];
   userPictureOnly: boolean = true;
 
   constructor(private sidebarService: NbSidebarService) { }
@@ -34,7 +34,6 @@ export class LayoutComponent implements OnInit {
   
     this.sidebarService.toggle(true, 'menu-sidebar');
     // this.layoutService.changeLayoutSize();
-
     return false;
   }
 }

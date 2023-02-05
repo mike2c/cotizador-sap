@@ -18,6 +18,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.analytics.trackPageViews();
-    this.seoService.trackCanonicalChanges();
+    this.seoService.trackCanonicalChanges();    
   }
 }

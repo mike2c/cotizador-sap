@@ -1,11 +1,11 @@
-import { AuthService } from './../auth.service';
-import { UserId } from './user-id';
+import { Subscription } from 'rxjs';
+import { UserId } from '../../shared/models/userid.model';
 import { CompanyDTO } from './../../shared/dtos/company.dto';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CompanyService } from '../../shared/services/company.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { log } from 'console';
+import { AuthService } from '../../shared/auth/auth.service';
 
 @Component({
   selector: 'scs-login',
@@ -13,11 +13,15 @@ import { log } from 'console';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, OnDestroy {
-    
+  
+  private companySubscription: Subscription;
+
   companies: Array<CompanyDTO>;
   loginForm: FormGroup;
   
   constructor(private companyService: CompanyService, private authService: AuthService, private router: Router) { 
+        
+    localStorage.clear(); //limpia el token y la informacion de usuario
 
     this.loginForm = new FormGroup({
       'username': new FormControl('manager', [Validators.required]),
@@ -27,12 +31,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-  
+    this.companySubscription.unsubscribe();
   }
 
   ngOnInit(): void {
     
-    this.companyService.getAllCompanies().subscribe({
+    this.companySubscription = this.companyService.getAllCompanies().subscribe({
       next: (response) => {
 
         this.companies = response.data;        
@@ -62,7 +66,4 @@ export class LoginComponent implements OnInit, OnDestroy {
     });    
   }
 
-  showAlert() {
-    
-  }
 }

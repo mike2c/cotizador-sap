@@ -1,14 +1,16 @@
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { UserId } from './login/user-id';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
+import { UserId } from '../models/userid.model';
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   doAuthentication(userId: UserId): Observable<any> {
     
