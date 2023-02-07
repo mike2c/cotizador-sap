@@ -45,7 +45,10 @@
               "node_modules/nebular-icons/scss/nebular-icons.scss",
               "node_modules/pace-js/templates/pace-theme-flash.tmpl.css",
               "node_modules/leaflet/dist/leaflet.css",
-              "src/app/@theme/styles/styles.scss",
+              "src/app/template/@theme/styles/styles.scss",
+              "./node_modules/primeicons/primeicons.css",
+              "./node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+              "./node_modules/primeng/resources/primeng.min.css",
               "node_modules/ng-zorro-antd/src/ng-zorro-antd.min.css",
               "./src/assets/styles/custom.scss"
             ],
@@ -143,7 +146,10 @@
               "node_modules/socicon/css/socicon.css",
               "node_modules/nebular-icons/scss/nebular-icons.scss",
               "node_modules/pace-js/templates/pace-theme-flash.tmpl.css",
-              "src/app/@theme/styles/styles.scss"
+              "./node_modules/primeicons/primeicons.css",
+              "./node_modules/primeng/resources/themes/nova/theme.css",
+              "./node_modules/primeng/resources/primeng.min.css",
+              "src/app/template/@theme/styles/styles.scss"
             ],
             "assets": [
               "src/assets",

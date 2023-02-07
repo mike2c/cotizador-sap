@@ -1,9 +1,16 @@
 export interface CotizacionDTO {
-    cotizacionId: number,
-    noDocumento: number,
-    fechaDocumento: Date,
-    nombre: string,
-    estado: string,
-    moneda: string,
-    montoTotal: number
+    docStatus: string;
+    docEntry: number;
+    docNum: number;
+    cardcode: string;
+    cardName: string;
+    docCur: string;
+    slpCode: number;
+    discPrcnt: number;
+    docTotal: number;
+    docDate: Date;
+    docDueDate: Date;
+    taxDate: Date;
+    reqDate: Date;
+    comments: string;
 }

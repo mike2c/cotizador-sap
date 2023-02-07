@@ -1,8 +1,8 @@
 import { CotizacionService } from './../services/cotizacion.service';
 import { Component, OnInit } from '@angular/core';
 import { CotizacionDTO } from '../dto/cotizacion.dto';
-import { NzTableQueryParams } from 'ng-zorro-antd/table';
-
+import { LazyLoadEvent } from 'primeng/api/lazyloadevent';
+import { QUOTATION_COLUMNS } from './column-list';
 @Component({
   selector: 'ngx-quotation-list',
   templateUrl: './quotation-list.component.html',
@@ -10,20 +10,19 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 })
 export class QuotationListComponent implements OnInit {
 
-  total = 1;
-  listOfRandomUser: CotizacionDTO[] = [];
-  loading = true;
-  pageSize = 50;
-  pageIndex = 1;
-  filterGender = [
-    { text: 'male', value: 'male' },
-    { text: 'female', value: 'female' }
-  ];
+  columns = QUOTATION_COLUMNS;
+  
+  pageIndex = 1;  
+  pageSize = 10;  
+  totalRecords: number = 50;
+  quotations: CotizacionDTO[] = [];
+  loading = false;
 
+  
   constructor(private cotizacionService: CotizacionService) { }
 
   ngOnInit(): void { 
-    //this.loadDataFromServer(this.pageIndex, this.pageSize, null, null, []);
+    this.loadDataFromServer(this.pageIndex, this.pageSize, null, null, []);    
   }
 
   loadDataFromServer(
@@ -31,22 +30,36 @@ export class QuotationListComponent implements OnInit {
     pageSize: number,
     sortField: string | null,
     sortOrder: string | null,
-    filter: Array<{ key: string; value: string[] }>
-  ): void {
-    this.loading = true;
-    this.cotizacionService.getUsers(pageIndex, pageSize, sortField, sortOrder, filter).subscribe(data => {
-      this.loading = false;
-      this.total = data.data.length;
-      this.listOfRandomUser = data.data;
-    });
+    filters: Array<{ key: string; value: any }>): void { //string[]
+
+      this.pageSize = pageSize;
+      this.pageIndex = pageIndex;
+      this.loading = true;
+
+      this.cotizacionService.getQuotations(pageIndex, pageSize, sortField, sortOrder, filters).subscribe(response => {
+                
+        this.quotations = response.data;   
+        this.loading = false;
+        this.totalRecords = response.totalRecords;         
+      });
   }
 
-  onQueryParamsChange(params: NzTableQueryParams): void {    
-    // const { pageSize, pageIndex, sort, filter } = params;
-    // const currentSort = sort.find(item => item.value !== null);
-    // const sortField = (currentSort && currentSort.key) || null;
-    // const sortOrder = (currentSort && currentSort.value) || null;
-    // this.loadDataFromServer(pageIndex, pageSize, sortField, sortOrder, filter);
+  onLazyLoad(event: LazyLoadEvent): void {    
+
+    const { first, rows = 10, sortField } = event;
+    const sortOrder = event.sortOrder == 1 ? 'asc' : 'desc';    
+    const pageIndex = (first / rows) + 1;
+    
+    let filters: Array<{ key: string, value: any }> = this.columns.filter(a => a.filter).map(a => {
+      
+      return {
+        key: a.name,
+        value: event.filters[a.name][0].value
+      };
+
+    }).filter(a => a.value !== null && a.value !== undefined);
+       
+    this.loadDataFromServer(pageIndex, rows, sortField, sortOrder, filters);
   }
 
 }

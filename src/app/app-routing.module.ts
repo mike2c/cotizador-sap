@@ -13,6 +13,11 @@ export const routes: Routes = [
     component: LayoutComponent,
     children:[
       {
+        path: '',
+        redirectTo: 'cotizacion',
+        pathMatch: 'full'
+      },
+      {
         path: 'cotizacion',
         loadChildren: ()  => import('./quotation/quotation.module').then(a => a.QuotationModule),
         canActivate: [AuthWard]

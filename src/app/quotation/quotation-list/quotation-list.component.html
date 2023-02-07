@@ -10,31 +10,36 @@
       </div>     
     </div>
     <div class="row">
-      <div class="col">
-        <nz-table
-          nzShowSizeChanger
-          [nzData]="listOfRandomUser"
-          [nzFrontPagination]="false"
-          [nzLoading]="false"
-          [nzTotal]="total"
-          [nzPageSize]="pageSize"
-          [nzPageIndex]="pageIndex"
-          (nzQueryParams)="onQueryParamsChange($event)">
-          <thead>
+      <div class="col">      
+        <p-table styleClass="p-datatable-gridlines p-datatable-sm" 
+            [value]="quotations" 
+            [lazy]="true" 
+            (onLazyLoad)="onLazyLoad($event)" 
+            responsiveLayout="scroll" 
+            dataKey="id"
+            [paginator]="true" 
+            [rows]="pageSize" 
+            [totalRecords]="totalRecords" 
+            [loading]="loading" 
+            [scrollable]="true"
+            scrollHeight="500px"
+            [virtualScroll]="true"             
+            [globalFilterFields]="['docNum', 'cardcode', 'cardName', 'docDate', 'docStatus', 'docCur']">
+
+          <ng-template pTemplate="header">
             <tr>
-              <th nzColumnKey="name" [nzSortFn]="true">Name</th>
-              <th nzColumnKey="gender" [nzFilters]="filterGender" [nzFilterFn]="true">Gender</th>
-              <th nzColumnKey="email" [nzSortFn]="true">Email</th>
+              <th [pSortableColumn]="column.name" *ngFor="let column of columns">
+                {{column.title}}
+                <p-columnFilter *ngIf="column.filter" [type]="column.filterType" field="{{column.name}}" display="menu"></p-columnFilter>
+              </th>
+            </tr>          
+          </ng-template>
+          <ng-template pTemplate="body" let-customer>
+            <tr>                
+                <td *ngFor="let column of columns">{{ customer[column.name] }}</td>                  
             </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let data of listOfRandomUser">
-              <td>{{ data.name.first }} {{ data.name.last }}</td>
-              <td>{{ data.gender }}</td>
-              <td>{{ data.email }}</td>
-            </tr>
-          </tbody>
-        </nz-table>
+          </ng-template>
+        </p-table>
       </div>
     </div>
   </nb-card-body>

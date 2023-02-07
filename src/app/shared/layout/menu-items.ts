@@ -17,7 +17,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: 'Ofertas de venta',
         icon: 'shopping-cart-outline',
-        link: '/pages/dashboard',        
+        link: 'cotizacion',        
       },
     ]
   },
