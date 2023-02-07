@@ -21,7 +21,7 @@ export class CotizacionService {
     filters: Array<{ key: string; value: any }>): Observable<PaginatedResponse<CotizacionDTO>> { // string[]
 
     let params = new HttpParams()
-      .append('pageIndex', `${pageIndex}`)
+      .append('pageNumber', `${pageIndex}`)
       .append('pageSize', `${pageSize}`)
       .append('sortField', `${sortField}`)
       .append('sortOrder', `${sortOrder}`);
