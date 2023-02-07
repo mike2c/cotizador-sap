@@ -5,4 +5,5 @@
  */
 export const environment = {
   production: true,
+  apiUrl: 'https://app.biowest.net/CSC_Cotizador_API/cotizador'
 };
